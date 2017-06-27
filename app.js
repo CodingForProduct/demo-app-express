@@ -52,9 +52,14 @@ app.get('/users/:id', function (request, response) {
   response.render('user', { user: targetUser[0] });
 });
 
+// display list of teams
 app.get('/teams', function (request, response) {
+  var teamsWithUsers = workshopTeams.map(function(team) {
+    return { name: team.name, id: team.id, users: [] };
+  })
+
   // pass data to template
-  response.render('teams', { teams: workshopTeams });
+  response.send(teamsWithUsers);
 });
 
 
