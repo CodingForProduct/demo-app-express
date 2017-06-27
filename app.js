@@ -1,10 +1,16 @@
 // libraries that this app needs
 var express = require('express');
 var path = require('path');
+var expressLayouts = require('express-ejs-layouts');
 var data = require('./data/workshop_data')
 
 // initialize app
 var app = express();
+
+// add layout support
+app.use(expressLayouts);
+// specifiy location of layout file
+app.set('layout', path.join(__dirname, 'views', 'layouts', 'layout'));
 
 // set the type of template that the app will use
 app.set('view engine', 'ejs');
