@@ -57,7 +57,7 @@ app.get('/teams', function (request, response) {
   var teamsWithUsers = workshopTeams.map(get_team_members)
 
   // pass data to template
-  response.send(teamsWithUsers);
+  response.render('teams', { teams: teamsWithUsers });
 });
 
 // start server on port
