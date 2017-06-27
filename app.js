@@ -63,7 +63,7 @@ app.get('/teams', function (request, response) {
   })
 
   // pass data to template
-  response.send(teamsWithUsers);
+  response.render('teams', { teams: teamsWithUsers });
 });
 
 

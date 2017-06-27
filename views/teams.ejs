@@ -6,7 +6,13 @@
     <h1>Teams</h1>
     <ul>
       <% teams.forEach(function(team){ %>
-      <li><%= team.name %></li>
+      <li><%= team.name %>
+        <ul>
+          <% team.users.forEach(function(user) { %>
+          <li><%= user.name %></li>
+          <% }) %>
+        </ul>
+      </li>
       <% }) %>
     </ul>
   </body>
