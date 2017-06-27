@@ -16,9 +16,19 @@ app.get('/', function (request, response) {
   response.render('home');
 });
 
+// array of users
+var workshopUsers = [
+  { id: 1, name: "Amy Jiang" },
+  { id: 2, name: "Bridget Dickens" },
+  { id: 3, name: "Carolina Bravo" },
+  { id: 4, name: "Christa Timil Keyes-Venson" },
+  { id: 5, name: "Cindy Wang" }
+];
+
 // display list of users
 app.get('/users', function (request, response) {
-  response.render('users');
+  // pass data to template
+  response.render('users', { users: workshopUsers });
 });
 
 // start server on port
