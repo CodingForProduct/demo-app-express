@@ -4,6 +4,10 @@
   </head>
   <body>
     <h1>Users</h1>
-    <%= JSON.stringify(users) %>
+    <ul>
+      <% users.forEach(function(user){ %>
+      <li><%= user.name %></li>
+      <% }) %>
+    </ul>
   </body>
 </html>
