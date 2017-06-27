@@ -42,7 +42,8 @@ app.get('/users/:id', function (request, response) {
     return user.id === Number(id);
   });
 
-  response.send(targetUser);
+  // pass data to template
+  response.render('user', { user: targetUser[0] });
 });
 
 // start server on port
