@@ -55,7 +55,11 @@ app.get('/users/:id', function (request, response) {
 // display list of teams
 app.get('/teams', function (request, response) {
   var teamsWithUsers = workshopTeams.map(function(team) {
-    return { name: team.name, id: team.id, users: [] };
+    var teamMembers =  workshopUsers.filter(function(user) {
+      return user.team_id === team.id;
+    });
+
+    return { name: team.name, id: team.id, users: teamMembers };
   })
 
   // pass data to template
