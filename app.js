@@ -30,6 +30,14 @@ app.get('/users', function (request, response) {
   response.render('users', { users: workshopUsers });
 });
 
+// display one user
+app.get('/users/:id', function (request, response) {
+  // get the id listed in the url
+  var id = request.params.id;
+
+  response.send(id);
+});
+
 // start server on port
 app.listen(3000, function() {
   console.log('server started on port 3000');
