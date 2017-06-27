@@ -16,6 +16,11 @@ app.get('/', function (request, response) {
   response.render('home');
 });
 
+// display list of users
+app.get('/users', function (request, response) {
+  response.render('users');
+});
+
 // start server on port
 app.listen(3000, () => {
   console.log('server started on port 3000');
