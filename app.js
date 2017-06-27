@@ -44,11 +44,21 @@ app.get('/users/:id', function (request, response) {
   response.render('user', { user: targetUser[0] });
 });
 
+// display list of teams
 app.get('/teams', function (request, response) {
-  // pass data to template
-  response.render('teams', { teams: workshopTeams });
-});
+  function get_team_members(team) {
+    var teamMembers =  workshopUsers.filter(function(user) {
+      return user.team_id === team.id;
+    });
 
+    return { name: team.name, id: team.id, users: teamMembers };
+  }
+
+  var teamsWithUsers = workshopTeams.map(get_team_members)
+
+  // pass data to template
+  response.send(teamsWithUsers);
+});
 
 // start server on port
 app.listen(3000, function() {
