@@ -35,7 +35,13 @@ app.get('/users/:id', function (request, response) {
   // get the id listed in the url
   var id = request.params.id;
 
-  response.send(id);
+  // find the user with a given idea
+  var targetUser = workshopUsers.filter(function(user){
+    // convert string params into a number
+    return user.id === Number(id);
+  });
+
+  response.send(targetUser);
 });
 
 // start server on port
