@@ -5,3 +5,8 @@ exports.users = [
   { id: 4, name: "Christa Timil Keyes-Venson" },
   { id: 5, name: "Cindy Wang" }
 ];
+
+exports.teams = [
+  { id: 1, name: "Team One" },
+  { id: 2, name: "Team Two" },
+]
