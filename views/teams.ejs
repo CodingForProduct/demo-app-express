@@ -9,7 +9,7 @@
       <li><%= team.name %>
         <ul>
           <% team.users.forEach(function(user) { %>
-          <li><%= user.name %></li>
+          <li><a href="/users/<%= user.id %>"><%= user.name %></a></li>
           <% }) %>
         </ul>
       </li>
