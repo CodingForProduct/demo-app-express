@@ -1,8 +1,11 @@
 {
   "dependencies": {
+    "dotenv": "^4.0.0",
     "ejs": "^2.5.6",
     "express": "^4.15.3",
-    "express-ejs-layouts": "^2.3.0"
+    "express-ejs-layouts": "^2.3.0",
+    "knex": "^0.13.0",
+    "pg": "^6.4.0"
   },
   "name": "demo-app-express",
   "version": "1.0.0",
