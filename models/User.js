@@ -8,7 +8,7 @@ var workshopUsers = [
 ];
 
 exports.findAll = function () {
-  return workshopUsers;
+  return db.select().from('users').orderBy('name');
 }
 
 exports.findOne = function (id) {
