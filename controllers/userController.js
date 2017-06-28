@@ -31,3 +31,14 @@ exports.getUser = function (request, response, next) {
 exports.newUser = function(request, response) {
   response.render('userNew');
 }
+
+exports.createUser = function(request, response, next) {
+  User.create(request.body)
+  .then(function () {
+    response.redirect('/users');
+  })
+  .catch(function(err) {
+    console.log('createUser error:', err);
+    next();
+  })
+}

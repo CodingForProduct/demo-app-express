@@ -13,6 +13,9 @@ router.get('/users', userController.getUsers);
 // display form to create user
 router.get('/users/new', userController.newUser);
 
+// create new user
+router.post('/users', userController.createUser);
+
 // display one user
 router.get('/users/:id', userController.getUser);
 
