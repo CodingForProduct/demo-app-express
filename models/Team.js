@@ -1,18 +1,18 @@
-var User = require('./User');
-
-// array of teams
-var workshopTeams = [
-  { id: 1, name: "Team One" },
-  { id: 2, name: "Team Two" },
-]
+var db = require('../config/database');
 
 exports.findAll = function () {
-  return workshopTeams.map(function(team) {
-    var users = User.findAll();
-    var teamMembers =  users.filter(function(user) {
-      return user.team_id === team.id;
-    });
-
-    return { name: team.name, id: team.id, users: teamMembers };
-  });
+  var teams;
+  return db.select().from('teams')
+  .then(function(res){
+    teams = res;
+    return db.select().from('users').whereNotNull('team_id')
+  })
+  .then(function(users) {
+    return teams.map(function(team) {
+      var teamMembers = users.filter(function(user) {
+        return user.team_id === team.id;
+      });
+      return { name: team.name, id: team.id, users: teamMembers }
+    })
+  })
 }
