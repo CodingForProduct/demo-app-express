@@ -10,6 +10,9 @@ router.get('/', homeController.home);
 // display list of users
 router.get('/users', userController.getUsers);
 
+// display form to create user
+router.get('/users/new', userController.newUser);
+
 // display one user
 router.get('/users/:id', userController.getUser);
 

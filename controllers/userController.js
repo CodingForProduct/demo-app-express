@@ -27,3 +27,7 @@ exports.getUser = function (request, response, next) {
     next();
   });
 }
+
+exports.newUser = function(request, response) {
+  response.render('userNew');
+}
