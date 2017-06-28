@@ -30,7 +30,6 @@ router.get('/users/:id', function (request, response, next) {
   // find the user with a given id
   User.where('id', id).fetch()
   .then(function(res) {
-    console.log(res)
     // pass data to template
     response.render('user', { user: res || {} });
   })
@@ -46,8 +45,6 @@ router.get('/teams', function (request, response, next) {
   Team.fetchAll({withRelated: ['users']})
   .then(function(res) {
 
-    console.log(res)
-
     // pass data to template
     response.render('teams', { teams:  res});
   })
@@ -56,7 +53,11 @@ router.get('/teams', function (request, response, next) {
     console.log('Team.findAll err:', err)
     next();
   });
+});
 
+// display list of teams
+router.get('/teams/new', function (request, response, next) {
+  response.render('teamsNew');
 });
 
 module.exports = router;
