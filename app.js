@@ -17,6 +17,9 @@ app.set('view engine', 'ejs');
 // set the directory for the templates
 app.set('views', path.join(__dirname, 'views'));
 
+// set the folder for  static assets
+app.use(express.static(path.join(__dirname, 'public')));
+
 // display root route
 app.get('/', function (request, response) {
   response.render('home');
@@ -63,7 +66,6 @@ app.get('/teams', function (request, response) {
   // pass data to template
   response.render('teams', { teams: teamsWithUsers });
 });
-
 
 // start server on port
 app.listen(3000, function() {
