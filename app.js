@@ -2,7 +2,9 @@
 var express = require('express');
 var path = require('path');
 var expressLayouts = require('express-ejs-layouts');
-var data = require('./data/workshop_data')
+
+var Team = require('./models/Team');
+var User = require('./models/User');
 
 // initialize app
 var app = express();
@@ -25,17 +27,11 @@ app.get('/', function (request, response) {
   response.render('home');
 });
 
-// array of users
-var workshopUsers = data.users;
-
-// array of teams
-var workshopTeams = data.teams;
-
 // display list of users
 app.get('/users', function (request, response) {
 
   // pass data to template
-  response.render('users', { users: workshopUsers });
+  response.render('users', { users: User.findAll() });
 });
 
 // display one user
@@ -43,28 +39,17 @@ app.get('/users/:id', function (request, response) {
   // get the id listed in the url
   var id = request.params.id;
 
-  // find the user with a given idea
-  var targetUser = workshopUsers.filter(function(user){
-    // convert string params into a number
-    return user.id === Number(id);
-  });
+  var targetUser = User.findOne(Number(id));
 
   // pass data to template
-  response.render('user', { user: targetUser[0] });
+  response.render('user', { user: targetUser });
 });
 
 // display list of teams
 app.get('/teams', function (request, response) {
-  var teamsWithUsers = workshopTeams.map(function(team) {
-    var teamMembers =  workshopUsers.filter(function(user) {
-      return user.team_id === team.id;
-    });
-
-    return { name: team.name, id: team.id, users: teamMembers };
-  })
 
   // pass data to template
-  response.render('teams', { teams: teamsWithUsers });
+  response.render('teams', { teams: Team.findAll() });
 });
 
 // start server on port
