@@ -1,16 +1,20 @@
-var User = require('./User');
-var data = require('../data/workshop_data');
-
-// array of teams
-var workshopTeams = data.teams;
-
-exports.findAll = function () {
-  return workshopTeams.map(function(team) {
-    var users = User.findAll();
-    var teamMembers =  users.filter(function(user) {
-      return user.team_id === team.id;
-    });
-
-    return { name: team.name, id: team.id, users: teamMembers };
+'use strict';
+module.exports = function(sequelize, DataTypes) {
+  var Team = sequelize.define('Team', {
+    name: DataTypes.STRING
+  }, {
+    tableName: 'teams',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+    classMethods: {
+      associate: function(models) {
+        Team.hasMany(models.User, {
+          foreignKey: 'team_id',
+          as: 'users',
+        });
+      }
+    }
   });
-}
+  return Team;
+};
