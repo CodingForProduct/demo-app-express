@@ -9,27 +9,51 @@ router.get('/', function (request, response) {
 });
 
 // display list of users
-router.get('/users', function (request, response) {
-  // pass data to template
-  response.render('users', { users: User.findAll() });
+router.get('/users', function (request, response, next) {
+  User.findAll()
+  .then(function(res) {
+    // pass data to template
+    response.render('users', { users: res.rows });
+  })
+  .catch(function(err) {
+    // log errors and go to next step
+    console.log('User.findAll err:', err)
+    next();
+  });
 });
 
 // display one user
-router.get('/users/:id', function (request, response) {
+router.get('/users/:id', function (request, response, next) {
   // get the id listed in the url
   var id = request.params.id;
 
-  var targetUser = User.findOne(Number(id));
-
-  // pass data to template
-  response.render('user', { user: targetUser });
+  // find the user with a given id
+  User.findOne(id)
+  .then(function(res) {
+    // pass data to template
+    response.render('user', { user: res.rows[0] || {} });
+  })
+  .catch(function(err) {
+    // log errors and go to next step
+    console.log('User.findOne err:', err)
+    next();
+  });
 });
 
 // display list of teams
-router.get('/teams', function (request, response) {
+router.get('/teams', function (request, response, next) {
+  Team.findAll()
+  .then(function(res) {
 
-  // pass data to template
-  response.render('teams', { teams: Team.findAll() });
+    // pass data to template
+    response.render('teams', { teams:  res});
+  })
+  .catch(function(err) {
+    // log errors and go to next step
+    console.log('Team.findAll err:', err)
+    next();
+  });
+
 });
 
 module.exports = router;
