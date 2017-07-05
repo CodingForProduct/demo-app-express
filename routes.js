@@ -13,11 +13,10 @@ router.get('/users', function (request, response, next) {
   User.findAll()
   .then(function(res) {
     // pass data to template
-    response.render('users', { users: res.rows });
+    response.render('users', { users: res });
   })
   .catch(function(err) {
-    // log errors and go to next step
-    console.log('User.findAll err:', err)
+    console.log('getUsers err:', err)
     next();
   });
 });
@@ -31,11 +30,10 @@ router.get('/users/:id', function (request, response, next) {
   User.findOne(id)
   .then(function(res) {
     // pass data to template
-    response.render('user', { user: res.rows[0] || {} });
+    response.render('user', { user: res || {} });
   })
   .catch(function(err) {
-    // log errors and go to next step
-    console.log('User.findOne err:', err)
+    console.log('getUser err:', err)
     next();
   });
 });
@@ -44,16 +42,13 @@ router.get('/users/:id', function (request, response, next) {
 router.get('/teams', function (request, response, next) {
   Team.findAll()
   .then(function(res) {
-
     // pass data to template
-    response.render('teams', { teams:  res});
+    response.render('teams', { teams: res });
   })
   .catch(function(err) {
-    // log errors and go to next step
     console.log('Team.findAll err:', err)
     next();
   });
-
 });
 
 module.exports = router;
