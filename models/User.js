@@ -1,11 +1,11 @@
-var db = require('../config/database');
+var bookshelf = require('../config/database').bookshelf;
+var Team = require('./team');
 
-exports.findAll = function () {
-  return db.raw('SELECT * from users');
-}
+var User = bookshelf.Model.extend({
+  tableName: 'users',
+  team: function() {
+    return this.belongsTo(Team);
+  },
+});
 
-exports.findOne = function (id) {
-  // to minimize the risk of raw sql inject, we use create a parital sql with
-  // " = ?", and then pass in the id as a variable
-  return db.raw('SELECT * from users where id = ? LIMIT 1', id);
-}
+module.exports = User;

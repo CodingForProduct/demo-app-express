@@ -1,10 +1,10 @@
 <h1>Teams</h1>
 <ul>
   <% teams.forEach(function(team){ %>
-  <li><%= team.name %>
+  <li><%= team.get('name') %>
     <ul>
-      <% team.users.forEach(function(user) { %>
-      <li><a href="/users/<%= user.id %>"><%= user.name %></a></li>
+      <% team.related('users').forEach(function(user) { %>
+      <li><a href="/users/<%= user.get('id') %>"><%= user.get('name') %></a></li>
       <% }) %>
     </ul>
   </li>
