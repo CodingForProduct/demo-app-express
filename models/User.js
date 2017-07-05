@@ -1,14 +1,11 @@
-var data = require('../data/workshop_data');
-
-// array of teams
-var workshopUsers = data.users;
+var db = require('../config/database');
 
 exports.findAll = function () {
-  return workshopUsers;
+  return db.raw('SELECT * from users');
 }
 
 exports.findOne = function (id) {
-  return workshopUsers.filter(function(user){
-    return user.id === id;
-  })[0];
+  // to minimize the risk of raw sql inject, we use create a parital sql with
+  // " = ?", and then pass in the id as a variable
+  return db.raw('SELECT * from users where id = ? LIMIT 1', id);
 }

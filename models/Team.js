@@ -1,18 +1,19 @@
-var User = require('./User');
-var data = require('../data/workshop_data');
+var db = require('../config/database');
 
-// array of teams
-var workshopTeams = data.teams;
+var teams;
 
 exports.findAll = function () {
-  function get_team_members(team) {
-    var teamMembers =  User.findAll().filter(function(user) {
-      return user.team_id === team.id;
-    });
-
-    return { name: team.name, id: team.id, users: teamMembers };
-  }
-
-  var teamsWithUsers = workshopTeams.map(get_team_members);
-  return teamsWithUsers;
+  return db.raw('SELECT * from teams')
+  .then(function(res){
+    teams = res.rows;
+    return db.raw('SELECT * from users WHERE team_id IS NOT NULL');
+  })
+  .then(function(users) {
+    return teams.map(function(team) {
+      var teamMembers = users.rows.filter(function(user) {
+        return user.team_id === team.id;
+      });
+      return { name: team.name, id: team.id, users: teamMembers }
+    })
+  })
 }
