@@ -5,7 +5,9 @@
     "express": "^4.15.3",
     "express-ejs-layouts": "^2.3.0",
     "knex": "^0.13.0",
-    "pg": "^6.4.0"
+    "pg": "^6.4.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.2.1"
   },
   "name": "demo-app-express",
   "version": "1.0.0",

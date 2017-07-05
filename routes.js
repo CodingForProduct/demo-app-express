@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var Team = require('./models/Team');
-var User = require('./models/User');
+var Team = require('./models');
+var User = require('./models');
 
 // display root route
 router.get('/', function (request, response) {
@@ -10,7 +10,7 @@ router.get('/', function (request, response) {
 
 // display list of users
 router.get('/users', function (request, response, next) {
-  User.findAll()
+  User.all()
   .then(function(res) {
     // pass data to template
     response.render('users', { users: res.rows });
