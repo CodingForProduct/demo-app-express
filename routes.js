@@ -8,12 +8,14 @@ router.get('/', function (request, response) {
   response.render('home');
 });
 
+console.log(User)
+
 // display list of users
 router.get('/users', function (request, response, next) {
-  User.findAll()
+  User.fetchAll()
   .then(function(res) {
     // pass data to template
-    response.render('users', { users: res.rows });
+    response.render('users', { users: res.models });
   })
   .catch(function(err) {
     // log errors and go to next step
@@ -28,10 +30,11 @@ router.get('/users/:id', function (request, response, next) {
   var id = request.params.id;
 
   // find the user with a given id
-  User.findOne(id)
+  User.where('id', id).fetch()
   .then(function(res) {
+    console.log(res)
     // pass data to template
-    response.render('user', { user: res.rows[0] || {} });
+    response.render('user', { user: res || {} });
   })
   .catch(function(err) {
     // log errors and go to next step
@@ -42,8 +45,10 @@ router.get('/users/:id', function (request, response, next) {
 
 // display list of teams
 router.get('/teams', function (request, response, next) {
-  Team.findAll()
+  Team.fetchAll({withRelated: ['users']})
   .then(function(res) {
+
+    console.log(res)
 
     // pass data to template
     response.render('teams', { teams:  res});
