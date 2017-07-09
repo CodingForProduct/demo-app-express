@@ -2,6 +2,9 @@
 
 <p>Name: <%= user.get('name') %></p>
 <p>Id: <%= user.get('id') %></p>
-<p>Languages: <%= user.related('languages') %></p>
+<p>Languages: <%= JSON.stringify(user.related('languages')) %>
+
+
+</p>
 <p>Github Repos: <%= user.related('github_repo') %></p>
 

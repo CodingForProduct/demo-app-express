@@ -32,7 +32,7 @@ router.get('/users/:id', function (request, response, next) {
   .then(function(res) {
     console.log(res)
     // pass data to template
-    response.render('user', { user: res || {} });
+    response.render('user', { user: res || {}, languages: res.related('languages') });
   })
   .catch(function(err) {
     // log errors and go to next step
