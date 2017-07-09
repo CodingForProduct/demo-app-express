@@ -1,4 +1,7 @@
 <h1>User Detail</h1>
 
-<p><%= user.get('name') %>: <%= user.get('id') %></p>
+<p>Name: <%= user.get('name') %></p>
+<p>Id: <%= user.get('id') %></p>
+<p>Languages: <%= user.related('languages') %></p>
+<p>Github Repos: <%= user.related('github_repo') %></p>
 
