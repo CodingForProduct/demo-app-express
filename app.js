@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var expressLayouts = require('express-ejs-layouts');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var routes = require('./routes');
 
 // initialize app
@@ -20,6 +22,20 @@ app.set('views', path.join(__dirname, 'views'));
 
 // set the folder for  static assets
 app.use(express.static(path.join(__dirname, 'public')));
+
+// cookie and session is for authentication
+app.use(cookieParser());
+var sess = {
+  secret: process.env.SESSION_SECRET,
+  cookie: {},
+  resave: false,
+  saveUninitialized: true,
+}
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1) // trust first proxy
+  sess.cookie.secure = true // serve secure cookies for https
+}
+app.use(session(sess))
 
 // bodyParser reads a form's input and stores it in request.body
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
