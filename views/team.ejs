@@ -2,3 +2,6 @@
 
 <p><%= team.get('name') %>: <%= team.get('id') %></p>
 
+<form action="/teams/<%= team.get('id') %>/delete" method="post">
+  <input type="submit" value="Delete" class="btn btn-primary">
+</form>
