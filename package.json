@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "body-parser": "^1.17.2",
     "bookshelf": "^0.10.3",
     "dotenv": "^4.0.0",
     "ejs": "^2.5.6",
