@@ -19,6 +19,12 @@ var User = bookshelf.Model.extend({
         .catch(function(err){ cb(err, null) })
       });
     });
+  },
+  comparePassword: function(textPassword, hash, cb) {
+    bcrypt.compare(textPassword, hash, function(err, isMatch) {
+      if(err) { cb(err, null) };
+      cb(null, isMatch);
+    });
   }
 });
 
