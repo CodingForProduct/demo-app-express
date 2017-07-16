@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
     "bookshelf": "^0.10.3",
     "dotenv": "^4.0.0",
