@@ -1,7 +1,7 @@
 <h1>Teams</h1>
 <ul>
   <% teams.forEach(function(team){ %>
-  <li><%= team.get('name') %>
+  <li><a href="/teams/<%= team.get('id') %>"><%= team.get('name') %></a>
     <ul>
       <% team.related('users').forEach(function(user) { %>
       <li><a href="/users/<%= user.get('id') %>"><%= user.get('name') %></a></li>
