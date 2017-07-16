@@ -222,5 +222,12 @@ router.post('/login',
   passport.authenticate('local', {successRedirect:'/', failureRedirect:'/login'})
 );
 
+// logout
+router.get('/logout', function(request, response, next) {
+  request.logout();
+  request.session.destroy();
+  response.redirect('/');
+})
+
 
 module.exports = router;
