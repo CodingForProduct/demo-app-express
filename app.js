@@ -5,8 +5,10 @@ var expressLayouts = require('express-ejs-layouts');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var KnexSessionStore = require('connect-session-knex')(session);
 var passport = require('passport');
 var routes = require('./routes');
+var knex = require('./config/database').knex;
 
 // initialize app
 var app = express();
@@ -26,11 +28,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // cookie, session, passport is for authentication
 app.use(cookieParser());
+
+// store session in database
+var store = new KnexSessionStore({
+    knex: knex,
+    tablename: 'sessions'
+});
+
 var sess = {
   secret: process.env.SESSION_SECRET,
   cookie: {},
   resave: false,
   saveUninitialized: true,
+  store: store
 }
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1) // trust first proxy
