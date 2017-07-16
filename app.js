@@ -52,6 +52,12 @@ app.use(session(sess))
 app.use(passport.initialize());
 app.use(passport.session());
 
+// make isAuthenticated avaliable to every view
+app.use(function(request, response, next) {
+  response.locals.isAuthenticated = request.isAuthenticated();
+  next();
+})
+
 // bodyParser reads a form's input and stores it in request.body
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(bodyParser.json()); // support json encoded bodies
