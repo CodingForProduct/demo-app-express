@@ -5,6 +5,7 @@ var expressLayouts = require('express-ejs-layouts');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var passport = require('passport');
 var routes = require('./routes');
 
 // initialize app
@@ -23,7 +24,7 @@ app.set('views', path.join(__dirname, 'views'));
 // set the folder for  static assets
 app.use(express.static(path.join(__dirname, 'public')));
 
-// cookie and session is for authentication
+// cookie, session, passport is for authentication
 app.use(cookieParser());
 var sess = {
   secret: process.env.SESSION_SECRET,
@@ -36,6 +37,8 @@ if (process.env.NODE_ENV === 'production') {
   sess.cookie.secure = true // serve secure cookies for https
 }
 app.use(session(sess))
+app.use(passport.initialize());
+app.use(passport.session());
 
 // bodyParser reads a form's input and stores it in request.body
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies

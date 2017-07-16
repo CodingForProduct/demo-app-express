@@ -10,6 +10,7 @@
     "express-ejs-layouts": "^2.3.0",
     "express-session": "^1.15.3",
     "knex": "^0.13.0",
+    "passport": "^0.3.2",
     "pg": "^6.4.0"
   },
   "name": "demo-app-express",

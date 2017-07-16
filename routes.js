@@ -188,11 +188,17 @@ router.post('/signup', function(request, response, next) {
   if(isValid()) {
     var user = new User;
     user.createUser({email: email, password: password, name: name}, function(err, user){
-     console.log('create', user, err)
      if(err) {
         response.render('auth/signup', {errors: err.detail})
      }
-     response.redirect('/login')
+      // login user after signup
+      // login comes from passport; login store user.id into session
+      request.login(user.get('id'), function(err) {
+        if(err) {
+            response.render('auth/signup', {errors: err.detail})
+        }
+        response.redirect('/');
+      })
     })
   } else  {
     response.render('auth/signup', {errors: 'Something went wrong'})
