@@ -158,4 +158,52 @@ router.post('/teams/:id/delete', function (request, response, next) {
     next();
   });
 });
+
+// show signup form
+router.get('/signup', function(request, response, next) {
+  response.render('auth/signup', { errors: null });
+})
+
+
+// process signup
+router.post('/signup', function(request, response, next) {
+  var email = request.body.email.trim();
+  var password = request.body.password.trim();
+  var password2 = request.body.password2.trim();
+  var name = request.body.name.trim();
+
+  function isValid() {
+    if (email !== '' &&
+      password !== '' &&
+      password2 !== '' &&
+      name !== '' &&
+      password === password2
+    ) {
+      return true;
+    } else {
+      return false
+    }
+  }
+
+  if(isValid()) {
+    var user = new User;
+    user.createUser({email: email, password: password, name: name}, function(err, user){
+     if(err) {
+        response.render('auth/signup', {errors: err.detail})
+     }
+      // login user after signup
+      // login comes from passport; login store user.id into session
+      request.login(user.get('id'), function(err) {
+        if(err) {
+            response.render('auth/signup', {errors: err.detail})
+        }
+        response.redirect('/');
+      })
+    })
+  } else  {
+    response.render('auth/signup', {errors: 'Something went wrong'})
+  }
+
+})
+
 module.exports = router;
