@@ -55,7 +55,30 @@ router.get('/teams', function (request, response, next) {
   });
 });
 
-// display list of teams
+router.post('/teams', function (request, response, next) {
+  function isValid(formData) {
+    if(formData.name.trim() !== '' &&
+      formData.name !== undefined) {
+        return true;
+    } else {
+      return false;
+    }
+  }
+
+  if(isValid(request.body)) {
+    new Team({ name: request.body.name }).save()
+    .then(function() {
+      response.redirect('/teams');
+    })
+    .catch(function(err) {
+      console.log('Team create err:', err)
+      next();
+    });
+  } else {
+    response.redirect('/teams/new');
+  }
+});
+
 router.get('/teams/new', function (request, response, next) {
   response.render('teamsNew');
 });

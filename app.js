@@ -2,6 +2,7 @@
 var express = require('express');
 var path = require('path');
 var expressLayouts = require('express-ejs-layouts');
+var bodyParser = require('body-parser');
 var routes = require('./routes');
 
 // initialize app
@@ -19,6 +20,10 @@ app.set('views', path.join(__dirname, 'views'));
 
 // set the folder for  static assets
 app.use(express.static(path.join(__dirname, 'public')));
+
+// bodyParser reads a form's input and stores it in request.body
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(bodyParser.json()); // support json encoded bodies
 
 // routes
 app.use('/', routes);
