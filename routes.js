@@ -98,4 +98,26 @@ router.get('/teams/:id', function (request, response, next) {
     next();
   });
 });
+
+
+// delete one team
+router.post('/teams/:id/delete', function (request, response, next) {
+  // destroy one team
+  Team
+  .where('id', request.params.id)
+  .destroy()
+  .then(function() {
+    // get all teams
+    return Team.fetchAll({withRelated: ['users']})
+  })
+  .then(function(res) {
+    // display all teams
+    response.render('teams', { teams:  res});
+  })
+  .catch(function(err) {
+    // log errors and go to next step
+    console.log('Team.findAll err:', err)
+    next();
+  });
+});
 module.exports = router;
