@@ -55,17 +55,17 @@ router.get('/teams', function (request, response, next) {
   });
 });
 
-router.post('/teams', function (request, response, next) {
-  function isValid(formData) {
-    if(formData.name.trim() !== '' &&
-      formData.name !== undefined) {
-        return true;
-    } else {
-      return false;
-    }
+function isTeamValid(formData) {
+  if(formData.name.trim() !== '' &&
+    formData.name !== undefined) {
+      return true;
+  } else {
+    return false;
   }
+}
 
-  if(isValid(request.body)) {
+router.post('/teams', function (request, response, next) {
+  if(isTeamValid(request.body)) {
     new Team({ name: request.body.name }).save()
     .then(function() {
       response.redirect('/teams');
@@ -97,6 +97,44 @@ router.get('/teams/:id', function (request, response, next) {
     console.log('Team err:', err)
     next();
   });
+});
+
+// show form to edit one team
+router.get('/teams/:id/edit', function (request, response, next) {
+  Team
+  .where('id', request.params.id)
+  .fetch()
+  .then(function(result) {
+    response.render('teamsEdit', { team: result })
+  })
+  .catch(function(err) {
+    console.log('Team.findAll err:', err)
+    next();
+  });
+});
+
+// update one team
+router.post('/teams/:id/update', function (request, response, next) {
+  var id = request.params.id;
+  console.log('isTeamValid', isTeamValid(request.body))
+  if(isTeamValid(request.body)) {
+    Team
+    .where('id', id)
+    .fetch()
+    .then(function(user) {
+      return user.save({name: request.body.name })
+    })
+    .then(function(user) {
+      response.redirect('/teams');
+    })
+    .catch(function(err) {
+      console.log('Team.findAll err:', err)
+      next();
+    });
+  } else {
+    response.redirect('/teams/' + id + '/edit');
+  }
+
 });
 
 
