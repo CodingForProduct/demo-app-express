@@ -79,8 +79,23 @@ router.post('/teams', function (request, response, next) {
   }
 });
 
+// display form to create new team
 router.get('/teams/new', function (request, response, next) {
   response.render('teamsNew');
 });
 
+
+// display one team
+router.get('/teams/:id', function (request, response, next) {
+  Team
+  .where('id', request.params.id)
+  .fetch()
+  .then(function(result) {
+    response.render('team', { team: result })
+  })
+  .catch(function(err) {
+    console.log('Team err:', err)
+    next();
+  });
+});
 module.exports = router;
