@@ -7,6 +7,8 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var KnexSessionStore = require('connect-session-knex')(session);
 var passport = require('passport');
+require('./config/passport')(passport);
+
 var routes = require('./routes');
 var knex = require('./config/database').knex;
 

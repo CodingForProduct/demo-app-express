@@ -1,12 +1,17 @@
 var express = require('express');
 var router = express.Router();
+var passport = require('passport');
+
 var Team = require('./models/Team');
 var User = require('./models/User');
 
 // display root route
 router.get('/', function (request, response) {
+  console.log(request.user)
+  console.log(request.isAuthenticated())
   response.render('home');
 });
+
 
 // display list of users
 router.get('/users', function (request, response, next) {
@@ -205,5 +210,17 @@ router.post('/signup', function(request, response, next) {
   }
 
 })
+
+// show signup form
+router.get('/login', function(request, response, next) {
+  response.render('auth/login');
+})
+
+
+// process login
+router.post('/login',
+  passport.authenticate('local', {successRedirect:'/', failureRedirect:'/login'})
+);
+
 
 module.exports = router;
